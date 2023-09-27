@@ -1,0 +1,74 @@
+######## Detector Info
+NewOutput 1
+GapIntensity -1 
+BadPxIntensity -2
+Ext .edf.ge3    # detector extension 
+DataType 1   # 1 for unit32, 2 for double, 3 for float, 4 for uint32, 5 for int32, 6 for tiff (uint32), 7 for tiff (uint8) 
+Padding 6    # number of digits in the filename 
+NrPixelsY 2048 # Horizontal NrPixels 
+NrPixelsZ 2048 # Vertical NrPixels 
+ImTransOpt 0   # 0: no change (GE), 1: flip left-right, 2:flip top-bottom (Pilatus)
+px 200 # pixel size in microns, GE(200), Pilatus(172)
+BytesPerPx 2
+IsHydra 1
+HeadSize 8192
+
+########## Exp Info : from ceria calibration
+Wavelength 0.172979  
+Lsd 3522610.296372189373
+BC 2248.578110826141 2065.170856498367
+ty 0.279487384035
+tz 0.081794298528
+tx 113
+p0 -0.000275270140
+p1 -0.000017153706
+p2 -0.000499641960
+p3 40.775698735269
+
+Normalize 1        # this should be 1 to preserve intensity
+doIntegration 1
+doLineout 1
+
+### parameters for Integration, DetectorMapper and Reconstruction
+### Sample Info
+RhoD 468400   # Maximum ring radius to use, microns. NOTE: It is very important not to change this value when processing the samples since p0,p1,p2 values are related to this number. Pilatus(150000), GE(200000)
+EtaMin -75    # minimum eta in degree for integration, normally -180
+EtaMax 25     # maximum eta in degree for integration, normally 180
+EtaBinSize 0.2
+RMin 300           # minimum radii in pixel for integration, int
+RMax 2700           # maximum radii in pixel for integration, int
+RBinSize 1      # Radii Bin Size
+
+### INTEGRATION RANGE
+etas 0         
+etaWidth 10
+rads 1500   
+Rwidth 1200
+Filter 1  #0:Mean; 1:Median and mean 
+
+### RECONSTRUCTION PRM
+ExtraPadForTomo 1
+filt 2
+'''                                   0: default\n"
+        "                            * 1: Shepp / Logan\n"
+        "                            * 2: Hann\n"
+        "                            * 3: Hamming\n"
+        "                            * 4: Ramp\n"'''
+withoutremovebkgtomo 1      #0: use the integration with background removal for tomo reconstruction
+
+### Change Below ###
+SeedFolder /scratch/s1iduser/stock_feb23_dt/                #result location
+RawFolder /scratch/s1iduser/raghavan_feb23_midas/data/ge3/  #input data location
+FileStem stock_pu_b01_02      #input data filestem
+Dark /scratch/s1iduser/raghavan_feb23_midas/data/ge3/dark_before_021303.edf.ge3  # darkfile location
+startNr 21001         # input data start file number
+endNr 21065           # input data end file number    
+nFrames 92       # number of frames per file   
+startOme 4       # start omega value for rotation
+omeStep -2       # omega step
+BadRotation 0      # If each alternate scan is in the other direction
+multipeak 0        # for singlepeak fitting it is 0
+fitWidth 10        # usually not changed, it is for fitting 
+numProcs 32        # how many processors will be used 
+
+####### Below are the parameters will be generated automatically in the .upd file, don't need to provided #######
